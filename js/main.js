@@ -16,8 +16,8 @@ var CHECKOUT_TIME = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var KeyCode = {
-  ESC_KEYCODE: 27,
-  ENTER_KEYCODE: 13,
+  ESC: 27,
+  ENTER: 13,
 };
 
 var map = document.querySelector('.map');
@@ -25,13 +25,11 @@ var templateMapPin = document.querySelector('#pin').content.querySelector('.map_
 var mapPins = document.querySelector('.map__pins');
 var mapPinMain = mapPins.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
-var adFormFieldsets = adForm.querySelectorAll('fieldset');
-var mapFilters = document.querySelector('.map__filters');
-var mapFiltersElements = mapFilters.querySelectorAll('select, fieldset');
 var addressField = adForm.querySelector('#address');
 var roomNumber = adForm.querySelector('#room_number');
 var capacity = adForm.querySelector('#capacity');
 var adFormSubmit = adForm.querySelector('.ad-form__submit');
+var hiddenFieldsBeforeStart = document.querySelectorAll('.ad-form fieldset, .map__filters select, .map__filters fieldset');
 var initalPinPositionX = mapPinMain.offsetLeft;
 var initalPinPositionY = mapPinMain.offsetTop;
 var initalPinAddressX = initalPinPositionX + (mapPinMain.offsetWidth / 2);
@@ -57,11 +55,8 @@ var roomsCapacityCompare = function () {
 var enableMap = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
-  for (var i = 0; i < adFormFieldsets.length; i++) {
-    adFormFieldsets[i].disabled = false;
-  }
-  for (var j = 0; j < mapFiltersElements.length; j++) {
-    mapFiltersElements[j].disabled = false;
+  for (var i = 0; i < hiddenFieldsBeforeStart.length; i++) {
+    hiddenFieldsBeforeStart[i].disabled = false;
   }
   addressField.value = getMainPinAddress(initalPinAddressX, initalPinPositionY - MIN_Y_COORDINATE + mapPinMain.offsetHeight + PIN_TIP_LENGTH);
 };
@@ -167,7 +162,7 @@ mapPinMain.addEventListener('mousedown', function () {
 });
 
 mapPinMain.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === KeyCode.ENTER_KEYCODE) {
+  if (evt.keyCode === KeyCode.ENTER) {
     init();
     enableMap();
   }
@@ -176,3 +171,10 @@ mapPinMain.addEventListener('keydown', function (evt) {
 roomNumber.addEventListener('change', roomsCapacityCompare);
 capacity.addEventListener('change', roomsCapacityCompare);
 adFormSubmit.addEventListener('click', roomsCapacityCompare);
+
+(function () {
+  for (var i = 0; i < hiddenFieldsBeforeStart.length; i++) {
+    hiddenFieldsBeforeStart[i].disabled = true;
+  }
+}
+)();

@@ -35,6 +35,12 @@ var initalPinPositionY = mapPinMain.offsetTop;
 var initalPinAddressX = initalPinPositionX + (mapPinMain.offsetWidth / 2);
 var initalPinAddressY = initalPinPositionY - MIN_Y_COORDINATE + (mapPinMain.offsetHeight / 2);
 
+var lock = function () {
+  for (var i = 0; i < hiddenFieldsBeforeStart.length; i++) {
+    hiddenFieldsBeforeStart[i].disabled = true;
+  }
+};
+
 var roomsCapacityCompare = function () {
   var rooms = Number(roomNumber.value);
   var guests = Number(capacity.value);
@@ -172,9 +178,4 @@ roomNumber.addEventListener('change', roomsCapacityCompare);
 capacity.addEventListener('change', roomsCapacityCompare);
 adFormSubmit.addEventListener('click', roomsCapacityCompare);
 
-(function () {
-  for (var i = 0; i < hiddenFieldsBeforeStart.length; i++) {
-    hiddenFieldsBeforeStart[i].disabled = true;
-  }
-}
-)();
+lock();

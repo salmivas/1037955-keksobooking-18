@@ -1,95 +1,10 @@
 'use strict';
 
 (function () {
-  var OBJECTS_NUMBER = 8;
-  var PAD_SIZE = 2;
-  var ADDRESS_NUMBER = 1000;
-  var COST_NUMBER = 1000;
-  var ROOMS_NUMBER = 10;
-  var GUESTS_NUMBER = 10;
-  var ZERO = 0;
-  var MIN_Y_COORDINATE = 130;
-  var MAX_Y_COORCINATE = 630;
-
-  var HOUSING_TYPE = ['palace', 'flat', 'house', 'bungalo'];
-  var CHECKIN_TIME = ['12:00', '13:00', '14:00'];
-  var CHECKOUT_TIME = ['12:00', '13:00', '14:00'];
-  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-
-  var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
   var templateMapPin = document.querySelector('#pin').content.querySelector('.map__pin');
-
-  var getLedZeroInt = function (num, size) {
-    var s = num + '';
-    while (s.length < size) {
-      s = '0' + s;
-    }
-    return s;
-  };
-
-  var getRandomNumber = function (anyNumber) {
-    return Math.floor(Math.random() * anyNumber);
-  };
-
-  var getRandomArrayLength = function (anyArray) {
-    return Math.floor((Math.random() * anyArray.length) + 1);
-  };
-
-  var shuffleArray = function (anyArray) {
-    for (var i = anyArray.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = anyArray[i];
-      anyArray[i] = anyArray[j];
-      anyArray[j] = temp;
-    }
-  };
-
-  var getRandomArray = function (anyArray) {
-    var newArray = anyArray.slice(getRandomArrayLength(anyArray));
-    shuffleArray(newArray);
-    return newArray;
-  };
-
-  var getRandomBetween = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
-
-  var getRandomAd = function (number) {
-    return {
-      author: {
-        avatar: 'img/avatars/user' + getLedZeroInt(number, PAD_SIZE) + '.png',
-      },
-      offer: {
-        title: 'Random title_' + getLedZeroInt(number, PAD_SIZE),
-        address: getRandomNumber(ADDRESS_NUMBER) + ', ' + getRandomNumber(ADDRESS_NUMBER),
-        price: getRandomNumber(COST_NUMBER),
-        type: getRandomArray(HOUSING_TYPE)[ZERO],
-        rooms: getRandomNumber(ROOMS_NUMBER),
-        guests: getRandomNumber(GUESTS_NUMBER),
-        checkin: getRandomArray(CHECKIN_TIME)[ZERO],
-        checkout: getRandomArray(CHECKOUT_TIME)[ZERO],
-        features: getRandomArray(FEATURES),
-        description: 'Random description_' + getLedZeroInt(number, PAD_SIZE),
-        photos: getRandomArray(PHOTOS),
-      },
-      location: {
-        x: getRandomBetween(ZERO + (templateMapPin.offsetWidth / 2), map.offsetWidth - (templateMapPin.offsetWidth / 2)),
-        y: getRandomBetween(MIN_Y_COORDINATE, MAX_Y_COORCINATE),
-      }
-    };
-  };
-
-  var getAd = function (requiredNumber) {
-    var adList = [];
-    for (var i = 1; i < requiredNumber + 1; i++) {
-      adList.push(getRandomAd(i));
-    }
-    return adList;
-  };
-
-  var ads = getAd(OBJECTS_NUMBER);
+  var templateError = document.querySelector('#error').content.querySelector('.error');
+  var main = document.querySelector('main');
 
   var renderPin = function (ad) {
     var pinElement = templateMapPin.cloneNode(true);
@@ -102,15 +17,28 @@
     return pinElement;
   };
 
-  var init = function () {
+  var showError = function () {
+    var errorElement = templateError.cloneNode(true);
+
+    main.insertAdjacentElement('afterbegin', errorElement);
+    var tryAgainButton = main.querySelector('.error__button');
+    errorElement = main.querySelector('.error');
+    tryAgainButton.addEventListener('mousedown', function () {
+      window.location.reload();
+    });
+  };
+
+  var init = function (pins) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < ads.length; i++) {
-      fragment.appendChild(renderPin(ads[i]));
+
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(renderPin(pins[i]));
     }
     mapPins.appendChild(fragment);
   };
 
   window.pinGenerator = {
     init: init,
+    showError: showError,
   };
 })();

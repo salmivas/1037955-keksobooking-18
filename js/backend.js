@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   var Adress = {
-    AUTH_URL: 'https://js.dump.academy/code-and-magick',
+    AUTH_URL: 'https://js.dump.academy/keksobooking',
     DATA_URL: 'https://js.dump.academy/keksobooking/data',
   };
 

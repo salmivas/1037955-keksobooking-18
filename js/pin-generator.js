@@ -5,6 +5,7 @@
   var templateMapPin = document.querySelector('#pin').content.querySelector('.map__pin');
   var templateError = document.querySelector('#error').content.querySelector('.error');
   var main = document.querySelector('main');
+  var mapFiltersContainer = main.querySelector('.map__filters-container');
 
   var renderPin = function (ad) {
     var pinElement = templateMapPin.cloneNode(true);
@@ -28,16 +29,23 @@
     });
   };
 
-  var init = function (pins) {
+  var pasteToDOM = function (renderFunc, obj) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(renderPin(pins[i]));
+    for (var i = 0; i < obj.length; i++) {
+      fragment.appendChild(renderFunc(obj[i]));
     }
-    mapPins.appendChild(fragment);
+
+    return fragment;
+  };
+
+  var init = function (pins) {
+    mapPins.appendChild(pasteToDOM(renderPin, pins));
+    mapFiltersContainer.before(pasteToDOM(window.cardGenerator.renderCard, pins));
   };
 
   window.pinGenerator = {
+    pasteToDOM: pasteToDOM,
     init: init,
     showError: showError,
   };

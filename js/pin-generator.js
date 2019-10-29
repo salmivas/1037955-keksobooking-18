@@ -15,6 +15,10 @@
     pinElement.style.left = (ad.location.x + (templateMapPin.offsetWidth / 2)) + 'px';
     pinElement.style.top = (ad.location.y + templateMapPin.offsetHeight) + 'px';
 
+    pinElement.addEventListener('click', function () {
+      mapFiltersContainer.before(window.cardGenerator.renderCard(ad));
+    });
+
     return pinElement;
   };
 
@@ -41,7 +45,7 @@
 
   var init = function (pins) {
     mapPins.appendChild(pasteToDOM(renderPin, pins));
-    mapFiltersContainer.before(pasteToDOM(window.cardGenerator.renderCard, pins));
+    mapFiltersContainer.before(window.cardGenerator.renderCard(pins[0]));
   };
 
   window.pinGenerator = {

@@ -14,7 +14,7 @@
     xhr.send();
   };
 
-  var save = function (data, onLoad, onError) {
+  var save = function (onLoad, onError, data) {
     var xhr = request(onLoad, onError);
 
     xhr.open('POST', Adress.AUTH_URL);

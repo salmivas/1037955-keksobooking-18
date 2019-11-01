@@ -3,8 +3,8 @@
 (function () {
   var capacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
-  var adFormSubmit = document.querySelector('.ad-form__submit');
-
+  var adForm = document.querySelector('.ad-form');
+  var adFormSubmit = adForm.querySelector('.ad-form__submit');
 
   var roomsCapacityCompare = function () {
     var rooms = Number(roomNumber.value);
@@ -26,4 +26,10 @@
   roomNumber.addEventListener('change', roomsCapacityCompare);
   capacity.addEventListener('change', roomsCapacityCompare);
   adFormSubmit.addEventListener('click', roomsCapacityCompare);
+
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(window.messageGenerator.successHandler, window.messageGenerator.errorHandler, new FormData(adForm));
+  });
 })();

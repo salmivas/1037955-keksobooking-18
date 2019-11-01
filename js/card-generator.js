@@ -40,19 +40,25 @@
     var features = cardElement.querySelector('.popup__features');
     var photos = cardElement.querySelector('.popup__photos');
     var popupPhoto = cardElement.querySelector('.popup__photo');
+    var button = cardElement.querySelector('.popup__close');
 
-    cardElement.querySelector('.popup__title').innerText = ad.offer.title;
-    cardElement.querySelector('.popup__text--address').innerText = ad.offer.address;
-    cardElement.querySelector('.popup__text--price').innerText = ad.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').innerText = housesType[ad.offer.type];
-    cardElement.querySelector('.popup__text--capacity').innerText = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей.';
-    cardElement.querySelector('.popup__text--time').innerText = 'Заезд после ' + ad.offer.checkin + ' , выезд до ' + ad.offer.checkout;
+    cardElement.querySelector('.popup__title').textContent = ad.offer.title;
+    cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
+    cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
+    cardElement.querySelector('.popup__type').textContent = housesType[ad.offer.type];
+    cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей.';
+    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ' , выезд до ' + ad.offer.checkout;
     features.innerHTML = '';
     features.appendChild(renderFeatures(ad));
-    cardElement.querySelector('.popup__description').innerText = ad.offer.description;
+    cardElement.querySelector('.popup__description').textContent = ad.offer.description;
     photos.innerHTML = '';
     photos.appendChild(renderPhotos(ad, popupPhoto));
     cardElement.querySelector('.popup__avatar').src = ad.author.avatar;
+
+    button.addEventListener('click', function () {
+      cardElement.remove();
+      window.pinGenerator.removeActivePins(document.querySelectorAll('.map__pin'));
+    });
 
     return cardElement;
   };

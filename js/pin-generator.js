@@ -9,16 +9,14 @@
 
   var removeExistentCard = function () {
     var mapCard = main.querySelector('.map__card');
-    if (main.contains(mapCard)) {
+    if (mapCard) {
       mapCard.remove();
     }
   };
 
   var removeActivePins = function (list) {
     for (var i = 0; i < list.length; i++) {
-      if (list.item(i).classList.contains('map__pin--active')) {
-        list.item(i).classList.remove('map__pin--active');
-      }
+      list.item(i).classList.remove('map__pin--active');
     }
   };
 

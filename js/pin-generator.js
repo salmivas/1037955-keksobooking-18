@@ -28,10 +28,10 @@
   };
 
   var removeAdPins = function () {
-    var pins = document.querySelectorAll('.map__pin');
-    for (var i = 1; i < pins.length; i++) {
-      pins[i].remove();
-    }
+    var pins = Array.from(document.querySelectorAll('.map__pin')).slice(1);
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
   };
 
   var renderPin = function (ad) {
@@ -119,13 +119,13 @@
     mapPins.appendChild(pasteToDOM(renderPin, returnedPins));
   };
 
-  mapFilters.addEventListener('change', function () {
-    drawPins();
-  });
+  var onDraw = window.debounce(drawPins);
+
+  mapFilters.addEventListener('change', onDraw);
 
   var init = function (pins) {
     receivedPinsData = pins;
-    drawPins();
+    onDraw();
   };
 
   window.pinGenerator = {

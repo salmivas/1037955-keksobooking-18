@@ -81,14 +81,11 @@
   };
 
   var disableMap = function () {
-    var pins = map.querySelectorAll('.map__pin');
     var mapCard = map.querySelector('.map__card');
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     lock();
-    for (var i = 1; i < pins.length; i++) {
-      pins[i].remove();
-    }
+    window.pinGenerator.removeAdPins();
     if (mapCard) {
       mapCard.remove();
     }

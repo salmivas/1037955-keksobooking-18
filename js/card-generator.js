@@ -57,7 +57,7 @@
 
     button.addEventListener('click', function () {
       cardElement.remove();
-      window.pinGenerator.removeActivePins(document.querySelectorAll('.map__pin'));
+      window.pinGenerator.removeActivePin(document.querySelectorAll('.map__pin'));
     });
 
     return cardElement;

@@ -10,7 +10,7 @@
   var timein = adForm.querySelector('#timein');
   var timeout = adForm.querySelector('#timeout');
 
-  var CostPerNight = {
+  var СostPerNight = {
     BUNGALO: 0,
     FLAT: 1000,
     HOUSE: 5000,
@@ -43,10 +43,10 @@
   });
 
   type.addEventListener('change', function () {
-    var typeValue = type.value;
+    var typeValue = type.value.toUpperCase();
 
-    price.setAttribute('min', CostPerNight[typeValue]);
-    price.setAttribute('placeholder', CostPerNight[typeValue]);
+    price.setAttribute('min', СostPerNight[typeValue]);
+    price.setAttribute('placeholder', СostPerNight[typeValue]);
   });
 
   adFormSubmit.addEventListener('click', roomsCapacityCompare);

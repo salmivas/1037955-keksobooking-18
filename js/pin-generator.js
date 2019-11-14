@@ -109,6 +109,7 @@
   };
 
   var drawPins = function () {
+    window.start.adCardRemove();
     var returnedPins = receivedPinsData
       .filter(chooseByHousing)
       .filter(chooseByPrice)

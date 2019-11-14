@@ -80,15 +80,19 @@
     }
   };
 
-  var disableMap = function () {
+  var adCardRemove = function () {
     var mapCard = map.querySelector('.map__card');
+    if (mapCard) {
+      mapCard.remove();
+    }
+  };
+
+  var disableMap = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     lock();
     window.pinGenerator.removeAdPins();
-    if (mapCard) {
-      mapCard.remove();
-    }
+    adCardRemove();
     adForm.reset();
     mapFilters.reset();
     mapPinMain.style.left = initialPinStyleLeft;
@@ -114,6 +118,7 @@
 
   window.start = {
     disableMap: disableMap,
+    adCardRemove: adCardRemove,
     keyCode: KeyCode,
   };
 })();

@@ -5,6 +5,7 @@
   var roomNumber = document.querySelector('#room_number');
   var adForm = document.querySelector('.ad-form');
   var adFormSubmit = adForm.querySelector('.ad-form__submit');
+  var adFormReset = document.querySelector('.ad-form__reset');
   var price = adForm.querySelector('#price');
   var type = adForm.querySelector('#type');
   var timein = adForm.querySelector('#timein');
@@ -50,6 +51,7 @@
   });
 
   adFormSubmit.addEventListener('click', roomsCapacityCompare);
+  adFormReset.addEventListener('click', window.start.disableMap);
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();

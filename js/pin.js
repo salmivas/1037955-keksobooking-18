@@ -6,7 +6,7 @@
   var templateError = document.querySelector('#error').content.querySelector('.error');
   var main = document.querySelector('main');
   var mapFiltersContainer = main.querySelector('.map__filters-container');
-  var receivedPinsData = [];
+  var items = [];
   var housingType = main.querySelector('#housing-type');
   var housingPrice = main.querySelector('#housing-price');
   var housingRooms = main.querySelector('#housing-rooms');
@@ -21,13 +21,13 @@
     }
   };
 
-  var removeActivePin = function (list) {
+  var removeActive = function (list) {
     for (var i = 0; i < list.length; i++) {
       list.item(i).classList.remove('map__pin--active');
     }
   };
 
-  var removeAdPins = function () {
+  var removeAd = function () {
     var pins = Array.from(document.querySelectorAll('.map__pin')).slice(1);
     pins.forEach(function (pin) {
       pin.remove();
@@ -43,9 +43,9 @@
     pinElement.style.top = (ad.location.y + templateMapPin.offsetHeight) + 'px';
 
     pinElement.addEventListener('click', function () {
-      removeActivePin(main.querySelectorAll('.map__pin'));
+      removeActive(main.querySelectorAll('.map__pin'));
       removeExistentCard();
-      mapFiltersContainer.before(window.cardGenerator.renderCard(ad));
+      mapFiltersContainer.before(window.card.render(ad));
       pinElement.classList.add('map__pin--active');
     });
 
@@ -64,7 +64,7 @@
   };
 
   var pasteToDOM = function (renderFunc, arr) {
-    removeAdPins();
+    removeAd();
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
       fragment.appendChild(renderFunc(arr[i]));
@@ -110,13 +110,12 @@
 
   var drawPins = function () {
     window.start.adCardRemove();
-    var returnedPins = receivedPinsData
-      .filter(chooseByHousing)
-      .filter(chooseByPrice)
-      .filter(chooseByHousingRooms)
-      .filter(chooseByHousingGuests)
-      .filter(chooseByFeatures)
-      .slice(0, 5);
+    var filterFunctions = [chooseByHousing, chooseByPrice, chooseByHousingRooms, chooseByHousingGuests, chooseByFeatures];
+    var returnedPins = items.filter(function (pin) {
+      return filterFunctions.every(function (func) {
+        return func(pin);
+      });
+    }).slice(0, 5);
     mapPins.appendChild(pasteToDOM(renderPin, returnedPins));
   };
 
@@ -125,14 +124,14 @@
   mapFilters.addEventListener('change', onDraw);
 
   var init = function (pins) {
-    receivedPinsData = pins;
+    items = pins;
     onDraw();
   };
 
-  window.pinGenerator = {
-    removeActivePin: removeActivePin,
-    removeAdPins: removeAdPins,
-    receivedPinsData: receivedPinsData,
+  window.pin = {
+    removeActive: removeActive,
+    removeAd: removeAd,
+    items: items,
     init: init,
     showError: showError,
   };

@@ -5,23 +5,28 @@
     DATA_URL: 'https://js.dump.academy/keksobooking/data',
   };
 
+  var HttpRequestType = {
+    Post: 'POST',
+    Get: 'GET'
+  };
+
   var SUCCESS_STATUS = 200;
 
-  var load = function (onLoad, onError) {
-    var xhr = request(onLoad, onError);
+  var get = function (onLoad, onError) {
+    var xhr = createRequestInstance(onLoad, onError);
 
-    xhr.open('GET', Adress.DATA_URL);
+    xhr.open(HttpRequestType.Get, Adress.DATA_URL);
     xhr.send();
   };
 
-  var save = function (onLoad, onError, data) {
-    var xhr = request(onLoad, onError);
+  var post = function (onLoad, onError, data) {
+    var xhr = createRequestInstance(onLoad, onError);
 
-    xhr.open('POST', Adress.AUTH_URL);
+    xhr.open(HttpRequestType.Post, Adress.AUTH_URL);
     xhr.send(data);
   };
 
-  var request = function (onLoad, onError) {
+  var createRequestInstance = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -37,7 +42,7 @@
   };
 
   window.backend = {
-    load: load,
-    save: save,
+    get: get,
+    post: post,
   };
 })();

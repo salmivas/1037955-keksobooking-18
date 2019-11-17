@@ -6,7 +6,7 @@
   var templateErrorMessage = document.querySelector('#error').content.querySelector('.error');
   var body = document.querySelector('body');
 
-  var errorHandler = function () {
+  var onError = function () {
     var element = templateErrorMessage.cloneNode(true);
     main.prepend(element);
     var errorButton = main.querySelector('.error__button');
@@ -25,7 +25,7 @@
     });
   };
 
-  var successHandler = function () {
+  var onSuccess = function () {
     var element = templateSuccessMessage.cloneNode(true);
     main.prepend(element);
     var successMessage = main.querySelector('.success');
@@ -43,7 +43,7 @@
   };
 
   window.messageGenerator = {
-    errorHandler: errorHandler,
-    successHandler: successHandler,
+    onError: onError,
+    onSuccess: onSuccess,
   };
 })();

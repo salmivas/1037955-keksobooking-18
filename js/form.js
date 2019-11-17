@@ -55,6 +55,6 @@
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(window.messageGenerator.successHandler, window.messageGenerator.errorHandler, new FormData(adForm));
+    window.backend.post(window.messageGenerator.onSuccess, window.messageGenerator.onError, new FormData(adForm));
   });
 })();

@@ -51,12 +51,12 @@
     var activatedPinAddressX = mapPinMain.offsetLeft + (mapPinMain.offsetWidth / 2);
     var activatedPinAddressY = mapPinMain.offsetTop + mapPinMain.offsetHeight + PIN_TIP_LENGTH;
 
-    mapPinMain.style.top = Math.max(mainPinLimits.minY, Math.min(moveEvt.pageY - shiftY, mainPinLimits.maxY)) + 'px';
-    mapPinMain.style.left = Math.max(mainPinLimits.minX, Math.min(moveEvt.pageX - map.offsetLeft - shiftX, mainPinLimits.maxX)) + 'px';
+    mapPinMain.style.top = Math.max(mainPinLimit.minY, Math.min(moveEvt.pageY - shiftY, mainPinLimit.maxY)) + 'px';
+    mapPinMain.style.left = Math.max(mainPinLimit.minX, Math.min(moveEvt.pageX - map.offsetLeft - shiftX, mainPinLimit.maxX)) + 'px';
     addressField.value = getMainPinAddress(activatedPinAddressX, activatedPinAddressY);
   };
 
-  var mainPinLimits = {
+  var mainPinLimit = {
     minY: MIN_Y_COORDINATE - mapPinMain.offsetHeight - PIN_TIP_LENGTH,
     maxY: MAX_Y_COORCINATE - mapPinMain.offsetHeight - PIN_TIP_LENGTH,
     minX: ZERO - (mapPinMain.offsetWidth / 2),
@@ -76,7 +76,7 @@
       for (var i = 0; i < hiddenFieldsBeforeStart.length; i++) {
         hiddenFieldsBeforeStart[i].disabled = false;
       }
-      window.backend.load(window.pinGenerator.init, window.pinGenerator.showError);
+      window.backend.get(window.pin.init, window.pin.showError);
     }
   };
 
@@ -91,7 +91,7 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     lock();
-    window.pinGenerator.removeAdPins();
+    window.pin.removeAd();
     adCardRemove();
     adForm.reset();
     mapFilters.reset();

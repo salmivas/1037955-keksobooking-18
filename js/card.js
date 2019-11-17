@@ -35,7 +35,7 @@
     return fragment;
   };
 
-  var renderCard = function (ad) {
+  var render = function (ad) {
     var cardElement = templateCard.cloneNode(true);
     var features = cardElement.querySelector('.popup__features');
     var photos = cardElement.querySelector('.popup__photos');
@@ -57,13 +57,13 @@
 
     button.addEventListener('click', function () {
       cardElement.remove();
-      window.pinGenerator.removeActivePin(document.querySelectorAll('.map__pin'));
+      window.pin.removeActive(document.querySelectorAll('.map__pin'));
     });
 
     return cardElement;
   };
 
-  window.cardGenerator = {
-    renderCard: renderCard,
+  window.card = {
+    render: render,
   };
 })();
